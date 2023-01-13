@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{/partials/pieces :: headBlock}">
+<title>Modificar Pedidos</title>
+</head>
+
+<body>
+	<header th:replace="~{/partials/pieces :: navbar}"></header>
+	<main class="container main">
+		<table class="table table-bordered border-success">
+			<thead>
+				<tr>
+					<th scope="col">Comprado por</th>
+					<th scope="col">Contato</th>
+					<th scope="col">Itens</th>
+					<th scope="col">Valor</th>
+					<th scope="col">Status</th>
+					<th scope="col">Forma de pagamento</th>
+					<th scope="col">Editar Pedido</th>
+				</tr>
+			</thead>
+			<tr th:each="cont : ${MostrarPedidos}">
+				<td th:text="${cont.usuario.getNome()}"></td>
+				<td th:text="${cont.usuario.getTelefone()}"></td>
+				<td th:text="${cont.produto}"></td>
+				<td th:text="${cont.preco}"></td>
+				<td th:text="${cont.status}"></td>
+				<td th:text="${cont.tipoPagamento}"></td>
+				<td><a th:href="|/admin/editarPedido?codigo=${cont.id_pedidos}|">Editar pedido</a></td>
+			</tr>
+		</table>
+	</main>
+	<footer class="text-center">
+		<div th:replace="~{/partials/pieces :: footer}"></div>
+	</footer>
+</body>
+
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{/partials/pieces :: headBlock}">
+<title>Login</title>
+</head>
+
+<body>
+	<header th:replace="~{/partials/pieces :: navbar}"></header>
+
+	<main class="container">
+		<div th:if="${mensagemErro}" class="alerta">
+			<div class="alert alert-danger" role="alert">
+				<p th:utext="${mensagemErro}"></p>
+			</div>
+		</div>
+
+		<form th:action="@{/login/usuario}" th:object="${usuarios}"
+			method="post">
+			<div class="container" style="margin-top: 120px;">
+				<h1>Login</h1>
+
+				<div class="break"></div>
+				<div class="font-input">
+					<label for="" class="form-label">Email</label> <input type="email"
+						th:field="*{email}" class="form-control" name="email" required
+						autofocus>
+				</div>
+				<div class="break"></div>
+				<div class="font-input">
+					<label for="" class="form-label">Senha</label> <input
+						type="password" th:field="*{senha}" class="form-control"
+						name="senha" required>
+				</div>
+				<div class="break"></div>
+				<div class="d-grid gap-2">
+					<input type="submit" class="font-input btn btn-success btn-lg" value="Entrar" />
+				</div>
+			</div>
+		</form>
+	</main>
+	<footer class="text-center">
+		<div th:replace="~{/partials/pieces :: footer}"></div>
+	</footer>
+</body>
+
+</html>

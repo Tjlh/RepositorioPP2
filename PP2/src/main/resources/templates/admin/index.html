@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{/partials/pieces :: headBlock}">
+<title>Listar usuários</title>
+</head>
+
+<body>
+	<header th:replace="~{/partials/pieces :: navbar}"></header>
+	<main class="container">
+		<table class="table table-bordered border-success">
+			<thead>
+				<tr>
+					<th scope="col">Nome</th>
+					<th scope="col">E-mail</th>
+					<th scope="col">Celular</th>
+					<th scope="col">Compras</th>
+					<th scope="col">Admin</th>
+					<th scope="col">Editar conta</th>
+				</tr>
+			</thead>
+			<tr th:each="cont : ${listarUsuarios}">
+				<td th:text="${cont.nome}"></td>
+				<td th:text="${cont.email}"></td>
+				<td th:text="${cont.telefone}"></td>
+				<td>Acessar Compras</td>
+				<td th:text="${cont.admin}"></td>
+				<td><a class="font-input"
+					th:href="|/admin/editarUsuario?codigo=${cont.id}|">Alterar
+						conta</a></td>
+			</tr>
+		</table>
+	</main>
+	<footer class="text-center">
+		<div th:replace="~{/partials/pieces :: footer}"></div>
+	</footer>
+</body>
+
+</html>

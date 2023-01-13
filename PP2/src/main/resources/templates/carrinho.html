@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{/partials/pieces :: headBlock}">
+<title>Carrinho</title>
+</head>
+<body>
+	<header th:replace="~{/partials/pieces :: navbar}"></header>
+
+	<main class="container">
+		<div class="container div-produto" th:each="item : ${listaItens}">
+			<div class="row align-items-end">
+				<div class="col"></div>
+				<div class="col text-end">
+					<a class="btn btn-sm btn-danger"
+						th:href="@{/removerProd(id=${item.produto.getId_produto()})}">
+						<i class="fa-solid fa-trash"></i>
+					</a>
+				</div>
+			</div>
+			<div class="row align-items-end">
+				<div class="col text-center font-input">Produto</div>
+				<div class="col text-center font-input">Descrição</div>
+			</div>
+			<div class="row align-items-center">
+				<div class="col text-center">
+					<div>
+						<div th:if="${item.produto.getImagem.length>5}">
+							<img th:src="|/foto/${item.produto.getId_produto()}|"
+								class="imagens" th:alt="${item.produto.getNome()}" />
+						</div>
+						<div th:if="${item.produto.getImagem().length==0}">
+							<img
+								src="https://rdironworks.com/wp-content/uploads/2017/12/dummy-200x200.png"
+								class="imagens" alt="" />
+						</div>
+					</div>
+				</div>
+				<div class="col text-center"
+					th:text="${item.produto.getDescricao()}"></div>
+			</div>
+
+			<div class="row align-items-center">
+				<div class="col text-center">
+					<span class="font-input">Preço: </span><span
+						class="preco-prod font-input">R$</span><span
+						class="preco-prod font-input"
+						th:text="${#numbers.formatDecimal(item.valorTotal,0,2)}"></span>
+				</div>
+				<div class="col text-center">
+					<span class="font-input">Qtd: </span><span class="font-input"
+						th:text="${item.qtd}"></span> <a class="btn btn-sm btn-danger"
+						th:href="@{/alterarQtd(id=${item.produto.getId_produto()},action=${0})}">
+						<i class="fa-solid fa-minus"></i>
+					</a> <a class="btn btn-sm btn-success" role="button"
+						th:href="@{/alterarQtd(id=${item.produto.getId_produto()},action=${1})}">
+						<i class="fa-solid fa-plus"></i>
+					</a>
+				</div>
+			</div>
+		</div>
+		<div class="break"></div>
+		<div class="container div-produto">
+			<div class="row align-items-center">
+				<div class="col-8 fs-3 fw-bold text-end">Total:</div>
+				<div class="col fs-3 fw-bold text-center"
+					th:text="${#numbers.formatDecimal(compra.total,1,2)}"></div>
+			</div>
+			<div class="col d-grid gap-2">
+				<a class="btn btn-outline-secondary text-center">Continuar
+					Comprando</a>
+			</div>
+			<div class="col d-grid gap-2">
+				<a class="btn btn-success text-center" role="button" th:href="finalizar">Finalizar
+					Compra</a>
+			</div>
+		</div>
+		<div style="margin: 15px;"></div>
+	</main>
+	<footer class="text-center">
+		<div th:replace="~{/partials/pieces :: footer}"></div>
+	</footer>
+</body>
+</html>

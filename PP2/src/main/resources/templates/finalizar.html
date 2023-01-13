@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{/partials/pieces :: headBlock}">
+<title>Carrinho</title>
+</head>
+<body>
+	<header th:replace="~{/partials/pieces :: navbar}"></header>
+
+	<main class="container-sm">
+		<form action="/confirmarCompra" method="post">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th class="font-input">Produto</th>
+						<th class="font-input">Qtd</th>
+						<th class="font-input">Preço</th>
+						<th class="font-input">Total</th>
+					</tr>
+				</thead>
+
+				<tbody th:each="item : ${listaItens}">
+
+					<tr>
+						<td class="col">
+							<div th:if="${item.produto.getImagem.length>5}">
+								<img th:src="|/foto/${item.produto.getId_produto()}|"
+									class="imagens-bp" th:alt="${item.produto.getNome()}" />
+							</div>
+							<div th:if="${item.produto.getImagem().length==0}">
+								<img
+									src="https://rdironworks.com/wp-content/uploads/2017/12/dummy-200x200.png"
+									class="imagens-bp" alt="" />
+							</div> <span class="font-input"> <a
+								th:text="${item.produto.getNome()}"></a>
+						</span>
+						</td>
+						<td><span class="font-input" th:text="${item.qtd}"></span></td>
+						<td><span class="font-input">R$</span><span
+							class="font-input"
+							th:text="${#numbers.formatDecimal(item.valorUnd,0,2)}"></span></td>
+						<td><span class="font-input">R$</span><span
+							class="font-input"
+							th:text="${#numbers.formatDecimal(item.valorTotal,0,2)}"></span></td>
+					</tr>
+				</tbody>
+				<tr>
+					<td><span class="font-input">Subtotal</span></td>
+					<td></td>
+					<td class="text-right"><span class="font-input">R$</span><span
+						class="font-input"
+						th:text="${#numbers.formatDecimal(compra.total,2,2)}"></span></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td><span class="font-input">Frete</span></td>
+					<td></td>
+					<td class="text-right"><span class="font-input">R$0,00</span></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td><span class="font-input">Total</span></td>
+					<td></td>
+					<td><span class="font-input">R$</span><span class="font-input"
+						th:text="${#numbers.formatDecimal(compra.total,0,2)}"></span></td>
+					<td></td>
+				</tr>
+			</table>
+			<div> 
+				<select class="form-select" aria-label="Default select example"
+					name="tipopagamento">
+					<option th:value="''" disabled selected>Forma de Pagamento</option>
+					<option
+						th:each="pag : ${T(br.ifpe.pp2.models.compra.TipoPagamento).values}"
+						th:text="${pag}" th:value="${pag}"></option>
+				</select>
+			</div>
+			<div class="break"></div>
+			<div class="col d-grid gap-2">
+				<button class="btn btn-success font-input text-center">Confirmar
+					Compra</button>
+			</div>
+		</form>
+	</main>
+	<footer class="text-center">
+		<div th:replace="~{/partials/pieces :: footer}"></div>
+	</footer>
+</body>
+</html>

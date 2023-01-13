@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{/partials/pieces :: headBlock}">
+<title>Cadastro</title>
+</head>
+
+<body>
+	<header th:replace="~{/partials/pieces :: navbar}">
+	</header>
+	
+	<main class="container main">
+		<div th:if="${sucess}" class="alerta">
+			<div class="alert alert-success" role="alert">
+				<p th:utext="${sucess}"></p>
+			</div>
+		</div>
+		<div th:if="${falha}" class="alerta">
+			<div class="alert alert-danger" role="alert">
+				<p th:utext="${falha}"></p>
+			</div>
+		</div>
+		<form th:action="@{/salvar/novousuario}" th:object="${usuarios}"
+			method="post">
+			<div class="container" style="margin-top: 100px;">
+				<h1>Realizar Cadastro</h1>
+				<div class="break"></div>
+				<div class="font-input">
+					<label for="" class="form-label">Nome</label> <input type="text"
+						th:field="*{nome}" class="form-control" required>
+				</div>
+				<div class="break"></div>
+				<div class="font-input">
+					<label for="" class="form-label">Email</label> <input type="email"
+						th:field="*{email}" name="email" class="form-control" required>
+				</div>
+				<div class="break"></div>
+				<div class="font-input">
+					<label for="" class="form-label">Celular</label> <input type="tel"
+						th:field="*{telefone}" class="form-control" minlength="11"
+						maxlength="11" required>
+				</div>
+				<div class="break"></div>
+				<div class="font-input">
+					<label for="" class="form-label">Senha</label> <input
+						type="password" th:field="*{senha}" class="form-control" required>
+				</div>
+				<div class="break"></div>
+				<div class="d-grid gap-2">
+					<button type="submit" class="font-input btn btn-success btn-lg">Cadastrar</button>
+				</div>
+			</div>
+		</form>
+	</main>
+	<footer class="text-center">
+		<div th:replace="~{/partials/pieces :: footer}"></div>
+	</footer>
+</body>
+
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{/partials/pieces :: headBlock}">
+<title>Meus Pedidos</title>
+</head>
+
+<body>
+	<header th:replace="~{/partials/pieces :: navbar}"></header>
+	<main class="container">
+		<div>
+			<h4>Histórico de Pedidos</h4>
+		</div>
+		<div>
+			<div class="row bg-success">
+				<div class="col fs-2 font-input text-white">Pedido</div>
+				<div class="col fs-2 font-input text-white">Status</div>
+				<div class="col fs-2 font-input text-white">Valor</div>
+			</div>
+		</div>
+		<div>
+			<div class="row">
+				<div class="col fs-2"></div>
+				<div class="col fs-2"></div>
+				<div class="col fs-2 text-right"></div>
+			</div>
+		</div>
+	</main>
+	<footer class="text-center">
+		<div th:replace="~{/partials/pieces :: footer}"></div>
+	</footer>
+</body>
+
+</html>

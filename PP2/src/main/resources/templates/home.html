@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{/partials/pieces :: headBlock}">
+<title>Cantina Store</title>
+</head>
+
+<body>
+	<header th:replace="~{/partials/pieces :: navbar}"></header>
+	<main class="container main">
+		<div class="container-center">
+			<nav class="nav" style="gap: 10px;">
+				<div class="nav-scroller bg-body" th:each="tipo :${mostrarTipos}">
+					<a class="nav-link text-dark"
+						th:href="@{'#a' +${tipo.id_categoria}}" th:text="${tipo.nome}"></a>
+				</div>
+			</nav>
+		</div>
+		<div class="break"></div>
+		<section class="container-center">
+			<form action="/pesquisarProdutos" method="post">
+				<input class="form-control" type="text" name="pesquisa" placeholder="Buscar produto...">
+			</form>
+			<br />
+			<div th:each="tipo :${mostrarTipos}">
+				<h1 th:id="@{${tipo.nome}+' a'+${tipo.id_categoria}}"
+					th:text="${tipo.nome}"></h1>
+				<div th:each="prod: ${listarProdutos}">
+
+					<div class="div-produto" th:if="${prod.categorias==tipo}">
+						<div class="produto" data-bs-toggle="modal"
+							th:data-bs-target="@{'#a' +${prod.id_produto}}">
+							<div class="info-prod">
+								<div class="nome-prod" th:text="${prod.nome}"></div>
+								<div class="descricao-prod" th:text="${prod.descricao}"></div>
+								<div class="preco-prod">
+									<span style="font-weight: bold;">R$</span> <span
+										th:text="${#numbers.formatDecimal(prod.preco,0,2)}"></span>
+								</div>
+							</div>
+							<div>
+								<div th:if="${prod.imagem.length>5}">
+									<img th:src="|/foto/${prod.id_produto}|" class="imagens"
+										th:alt="${prod.nome}" />
+
+								</div>
+								<div th:if="${prod.imagem.length==0}">
+									<img
+										src="https://rdironworks.com/wp-content/uploads/2017/12/dummy-200x200.png"
+										class="imagens" alt="" />
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</section>
+		<br />
+		<!-- Modal produtos-->
+		<div>
+			<div th:each="prod: ${listarProdutos}" class="modal fade"
+				th:id="@{'a' + ${prod.id_produto}}" tabindex="-1"
+				aria-labelledby="exampleModalLabel" aria-hidden=true>
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="container">
+							<h4>Descrição</h4>
+							<div th:text="${prod.descricao}"></div>
+						</div>
+						<div class="modal-header">
+							<h1 class="modal-title fs-5" th:text="${prod.nome}"></h1>
+							<div>&nbsp;</div>
+							<div style="font-weight: bold; font-size: 1.3rem; color: #008000">
+								<span>R$</span><span
+									th:text="${#numbers.formatDecimal(prod.preco,0,2)}"></span>
+							</div>
+
+							<button type="button" class="btn-close" data-bs-dismiss="modal"
+								aria-label="Close"></button>
+						</div>
+						<div class="modal-header rounded mx-auto d-block">
+
+							<div th:if="${prod.imagem.length>2}">
+								<img th:src="|/foto/${prod.id_produto}|" class="img-fluid"
+									style="height: 20rem;" th:alt="${prod.nome}" />
+
+							</div>
+							<div th:if="${prod.imagem.length==0}">
+								<img
+									src="https://rdironworks.com/wp-content/uploads/2017/12/dummy-200x200.png"
+									class="img-fluid" alt="" />
+
+							</div>
+						</div>
+						<div class="modal-body">
+							<div>
+								<label for="message-text" class="col-form-label">Observações:</label>
+								<textarea class="form-control" id="message-text"></textarea>
+							</div>
+						</div>
+						<div class="div-compras">
+							<div>
+								<!-- <a th:href="|/addCarrinho?id=${prod.id_produto}|" role="button" class="btn btn-success input-compras">Adicionar</a> -->
+								<a th:href="@{/addCarrinho(id=${prod.id_produto})}"
+									role="button" class="btn btn-success input-compras">Adicionar</a>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</main>
+	<footer class="text-center">
+		<div th:replace="~{/partials/pieces :: footer}"></div>
+	</footer>
+</body>
+</html>
