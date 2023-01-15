@@ -21,13 +21,17 @@
 				</tr>
 			</thead>
 			<tr th:each="cont : ${MostrarPedidos}">
-				<td th:text="${cont.usuario.getNome()}"></td>
-				<td th:text="${cont.usuario.getTelefone()}"></td>
-				<td th:text="${cont.produto}"></td>
-				<td th:text="${cont.preco}"></td>
+				<td th:if="${cont.usuario == null}" th:text="@{'Anônimo'}"></td>	
+				<td th:unless="${cont.usuario==null}" th:text="${cont.usuario.getNome()}"></td>
+				<td th:if="${cont.usuario == null}" th:text="@{'Contato indisponível'}"></td>	
+				<td th:unless="${cont.usuario==null}" th:text="${cont.usuario.getTelefone()}"></td>
+				<td >
+				<span  th:each="produto: ${cont.produtos}" th:text="@{${produto.produto.getNome()+';'+'&nbsp;'}}"></span>
+				</td>
+				<td th:text="${cont.total}"></td>
 				<td th:text="${cont.status}"></td>
-				<td th:text="${cont.tipoPagamento}"></td>
-				<td><a th:href="|/admin/editarPedido?codigo=${cont.id_pedidos}|">Editar pedido</a></td>
+				<td th:text="${cont.tipopagamento}"></td>
+				<td><a th:href="|/editarPedido?codigo=${cont.codigo}|">Editar pedido</a></td>
 			</tr>
 		</table>
 	</main>

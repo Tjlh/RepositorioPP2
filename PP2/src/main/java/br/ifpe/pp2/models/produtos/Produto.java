@@ -1,9 +1,7 @@
 package br.ifpe.pp2.models.produtos;
 
 import jakarta.persistence.Id;
-
 import java.util.Arrays;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

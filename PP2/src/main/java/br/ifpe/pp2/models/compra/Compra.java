@@ -1,19 +1,22 @@
 package br.ifpe.pp2.models.compra;
 
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
+
 import br.ifpe.pp2.models.produtos.Produto;
+import br.ifpe.pp2.models.produtos.ProdutoPedido;
 import br.ifpe.pp2.models.usuarios.Usuarios;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 
@@ -24,13 +27,25 @@ public class Compra {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long codigo;
 	private StatusPedido status;
-	@ManyToOne
+	@ManyToOne(fetch= FetchType.LAZY)
 	private Usuarios usuario;
 	@DateTimeFormat(iso = ISO.DATE)
 	private Date dataCompra = new Date();
-	private String tipopagamento;
+	private TipoPagamento tipopagamento;
 	private Double total=0.;
+	@ManyToMany(    cascade = {
+        CascadeType.PERSIST, 
+        CascadeType.MERGE
+    })
+    List<ProdutoPedido> produtos;
 	
+
+	public List<ProdutoPedido> getProdutos() {
+		return produtos;
+	}
+	public void setProdutos(List<ProdutoPedido> produtos) {
+		this.produtos = produtos;
+	}
 	public Long getCodigo() {
 		return codigo;
 	}
@@ -55,10 +70,10 @@ public class Compra {
 	public void setDataCompra(Date dataCompra) {
 		this.dataCompra = dataCompra;
 	}
-	public String getTipopagamento() {
+	public TipoPagamento getTipopagamento() {
 		return tipopagamento;
 	}
-	public void setTipopagamento(String tipopagamento) {
+	public void setTipopagamento(TipoPagamento tipopagamento) {
 		this.tipopagamento = tipopagamento;
 	}
 	public Double getTotal() {

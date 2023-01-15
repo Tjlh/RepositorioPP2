@@ -14,8 +14,6 @@ public class ProdutoPedido {
 	private Long id_pedido;
 	@ManyToOne
 	private Produto produto;
-	@ManyToOne
-	private Compra compra;
 	private Integer qtd=0;
 	private Double valorUnd=0.;
 	private Double valorTotal=0.;
@@ -31,12 +29,6 @@ public class ProdutoPedido {
 	}
 	public void setProduto(Produto produto) {
 		this.produto = produto;
-	}
-	public Compra getCompra() {
-		return compra;
-	}
-	public void setCompra(Compra compra) {
-		this.compra = compra;
 	}
 	public Integer getQtd() {
 		return qtd;

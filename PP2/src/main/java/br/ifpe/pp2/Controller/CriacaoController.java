@@ -32,7 +32,7 @@ public class CriacaoController {
 	@Autowired
 	private CategoriasDAO categoriadao;
 	@Autowired
-	private CompraDAO pedidosdao;
+	private CompraDAO compradao;
 
 	@GetMapping("/cadastro")
 	public String cadastro(Usuarios usuario) {
@@ -152,13 +152,14 @@ public class CriacaoController {
 
 	@GetMapping("/modificarPedidos")
 	public String modificarPedidos(Model model) {
-		model.addAttribute("MostrarPedidos", pedidosdao.findAll());
-		return "modificarPedidos";
+		model.addAttribute("MostrarPedidos", compradao.findAll());
+		return "listarPedidos";
 	}
 
-	@GetMapping("/admin/editarPedido")
-	public String editarPedido(Compra pedidos, Long codigo) {
-		return "";
+	@GetMapping("/editarPedido")
+	public String editarPedido(Compra pedidos,Model model, Long codigo) {
+		model.addAttribute("pedido", compradao.findById(codigo).orElse(null));
+		return "modificarPedido";
 	}
 
 }

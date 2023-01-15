@@ -25,6 +25,7 @@ import br.ifpe.pp2.models.produtos.ProdutoPedido;
 import br.ifpe.pp2.models.produtos.ProdutoPedidoDAO;
 import br.ifpe.pp2.models.usuarios.Usuarios;
 import br.ifpe.pp2.models.usuarios.UsuariosDAO;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class CarrinhoController {
@@ -130,6 +131,26 @@ public class CarrinhoController {
 		model.addAttribute("listaItens", listaPedido);
 		model.addAttribute("usuarios", usuario);
 		return "finalizar";
+	}
+	
+	@PostMapping("/confirmarCompra")
+	public String confirmarCompra(HttpSession session,Compra compra, String usuario,String tipopagamento, String produtoo,String valor) {
+		System.out.println(valor);
+		System.out.println(usuario);
+		if(usuario.length() >= 1) {
+			Long id = Long.parseLong(usuario);
+			Usuarios usuarios = usuariosdao.findById(id).orElse(null);
+			compra.setUsuario(usuarios);
+		}else {
+			compra.setUsuario(null);
+		}
+		for (ProdutoPedido i : listaPedido) {
+			compra.setProdutos(listaPedido);
+			}
+
+		compra.setStatus(br.ifpe.pp2.models.compra.StatusPedido.Andamento);
+		comprasdao.save(compra);
+		return "redirect:/";
 	}
 
 }

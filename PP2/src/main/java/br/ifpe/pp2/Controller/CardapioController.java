@@ -74,7 +74,7 @@ public class CardapioController {
 		return "login";
 	}
 	@PostMapping("/logout")
-	public String logout(HttpSession session	) {
+	public String logout(HttpSession session) {
 		session.invalidate();
 		return "redirect:/";
 	}
@@ -82,8 +82,6 @@ public class CardapioController {
 	
 	@PostMapping("/login/usuario")
 	public String loginUsuario(String email,String senha, RedirectAttributes ra, HttpSession session) {
-
-		
 		Usuarios usuario = this.usuariosdao.findByEmailAndSenha(email, senha);
 		if (usuario != null) {
 			if(session.getAttribute("tipo") == "admin") {

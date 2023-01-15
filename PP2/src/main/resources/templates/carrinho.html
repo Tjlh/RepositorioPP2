@@ -63,10 +63,10 @@
 			<div class="row align-items-center">
 				<div class="col-8 fs-3 fw-bold text-end">Total:</div>
 				<div class="col fs-3 fw-bold text-center"
-					th:text="${#numbers.formatDecimal(compra.total,1,2)}"></div>
+					th:text="@{'R$' + ${#numbers.formatDecimal(compra.total,1,2)}}"></div>
 			</div>
 			<div class="col d-grid gap-2">
-				<a class="btn btn-outline-secondary text-center">Continuar
+				<a class="btn btn-outline-secondary text-center" href='/'>Continuar
 					Comprando</a>
 			</div>
 			<div class="col d-grid gap-2">

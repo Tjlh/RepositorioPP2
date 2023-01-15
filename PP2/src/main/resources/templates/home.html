@@ -17,12 +17,9 @@
 		</div>
 		<div class="break"></div>
 		<section class="container-center">
-			<form action="/pesquisarProdutos" method="post">
-				<input class="form-control" type="text" name="pesquisa" placeholder="Buscar produto...">
-			</form>
 			<br />
 			<div th:each="tipo :${mostrarTipos}">
-				<h1 th:id="@{${tipo.nome}+' a'+${tipo.id_categoria}}"
+				<h1 th:id="@{${tipo.nome}+'a'+${tipo.id_categoria}}"
 					th:text="${tipo.nome}"></h1>
 				<div th:each="prod: ${listarProdutos}">
 
