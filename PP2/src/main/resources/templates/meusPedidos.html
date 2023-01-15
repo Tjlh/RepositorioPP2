@@ -3,31 +3,34 @@
 <head th:replace="~{/partials/pieces :: headBlock}">
 <title>Meus Pedidos</title>
 </head>
-
 <body>
 	<header th:replace="~{/partials/pieces :: navbar}"></header>
 	<main class="container">
-		<div>
-			<h4>Histórico de Pedidos</h4>
-		</div>
-		<div>
-			<div class="row bg-success">
-				<div class="col fs-2 font-input text-white">Pedido</div>
-				<div class="col fs-2 font-input text-white">Status</div>
-				<div class="col fs-2 font-input text-white">Valor</div>
-			</div>
-		</div>
-		<div>
-			<div class="row">
-				<div class="col fs-2"></div>
-				<div class="col fs-2"></div>
-				<div class="col fs-2 text-right"></div>
-			</div>
-		</div>
+		<h1>Compra Efetuada!</h1>
+		<table class="table table-bordered border-success"
+			th:each="buy: ${ListaDeCompras}">
+			<thead>
+				<tr>
+					<th scope="col">Data da compra</th>
+					<th scope="col">Valor da compra</th>
+					<th scope="col">Status</th>
+					<th scope="col">Forma de pagamento</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th scope="row"
+						th:text="${#dates.format(buy.dataCompra, 'dd/MM/yyyy - HH:mm')}"></th>
+					<td class="font-input"
+						th:text="${'R$'+ #numbers.formatDecimal(buy.total,2,2)}"></td>
+					<td th:text="${buy.status}"></td>
+					<td th:text="${buy.formaPagamento}"></td>
+				</tr>
+			</tbody>
+		</table>
 	</main>
 	<footer class="text-center">
 		<div th:replace="~{/partials/pieces :: footer}"></div>
 	</footer>
 </body>
-
 </html>

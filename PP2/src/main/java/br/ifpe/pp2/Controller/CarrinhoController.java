@@ -25,6 +25,7 @@ import br.ifpe.pp2.models.produtos.ProdutoPedido;
 import br.ifpe.pp2.models.produtos.ProdutoPedidoDAO;
 import br.ifpe.pp2.models.usuarios.Usuarios;
 import br.ifpe.pp2.models.usuarios.UsuariosDAO;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -42,25 +43,43 @@ public class CarrinhoController {
 	private List<ProdutoPedido> listaPedido = new ArrayList<ProdutoPedido>();
 	private Compra compra = new Compra();
 	private Usuarios usuario;
-	
-	private void calcularTotal() {
-		compra.setTotal(0.);
-		for (ProdutoPedido i : listaPedido) {
-			compra.setTotal(compra.getTotal() + i.getValorTotal());
+
+	/*
+	 * private void calcularTotal() { compra.setTotal(0.); for (ProdutoPedido i :
+	 * listaPedido) { compra.setTotal(compra.getTotal() + i.getValorTotal()); } }
+	 */
+	@GetMapping("/carrinho")
+	public String carrinho(Model model, HttpSession session) {
+		@SuppressWarnings("unchecked")
+		List<ProdutoPedido> listaPedido = (List<ProdutoPedido>) session.getAttribute("Meu_Carrinho");
+		if (listaPedido == null) {
+			listaPedido = new ArrayList<>();
+			return "carrinho-vazio";
+		} else {
+			if(listaPedido.size() == 0) {
+				return "carrinho-vazio";
+			}
+			model.addAttribute("sessionCarrinho", listaPedido);
+			model.addAttribute("compra", compra);
+			model.addAttribute("listaItens", listaPedido);
+			return "carrinho";
 		}
 	}
-
-	@GetMapping("/carrinho")
-	public String carrinho(Model model) {
-		calcularTotal();
-		model.addAttribute("compra", compra);
-		model.addAttribute("listaItens", listaPedido);
-		return "carrinho";
+	@GetMapping("/carrinho-vazio")
+	public String carrinhoVazio() {
+		return "carrinho-vazio";
 	}
 	
 	@GetMapping("/addCarrinho")
-	public String carrinho(Long id, Model model, RedirectAttributes redirect) {
+	public String carrinho(Long id, Model model, RedirectAttributes redirect, HttpServletRequest request) {
+		// calcularTotal();
 		Produto produto = produtosdao.findById(id).orElse(null);
+		@SuppressWarnings("unchecked")
+		List<ProdutoPedido> listaPedido = (List<ProdutoPedido>) request.getSession().getAttribute("Meu_Carrinho");
+		if (listaPedido == null) {
+			listaPedido = new ArrayList<>();
+			request.getSession().setAttribute("Meu_Carrinho", listaPedido);
+		}
 		int controle = 0;
 		/*
 		 * Array para ler a lista de pedidos e comparar o id do produto com o id
@@ -84,15 +103,26 @@ public class CarrinhoController {
 			item.setQtd(item.getQtd() + 1);
 			item.setValorTotal(item.getValorTotal() + (item.getQtd() * item.getValorUnd()));
 			listaPedido.add(item);
+			compra.setTotal(0.);
+			for (ProdutoPedido i : listaPedido) {
+				compra.setTotal(compra.getTotal() + i.getValorTotal());
+			}
 		}
 		System.out.println("ID: " + id);
+		System.out.println(compra.getTotal());
 		model.addAttribute("listaItens", listaPedido);
 		return "redirect:/carrinho";
 	}
 
 	@GetMapping("/alterarQtd")
-	public String alterarQtd(Long id, Model model, Integer action) {
+	public String alterarQtd(Long id, Model model, Integer action, HttpServletRequest request) {
 		Produto produto = produtosdao.findById(id).orElse(null);
+		@SuppressWarnings("unchecked")
+		List<ProdutoPedido> listaPedido = (List<ProdutoPedido>) request.getSession().getAttribute("Meu_Carrinho");
+		if (listaPedido == null) {
+			listaPedido = new ArrayList<>();
+			request.getSession().setAttribute("Meu_Carrinho", listaPedido);
+		}
 		for (ProdutoPedido i : listaPedido) {
 			if (i.getProduto().getId_produto().equals(id)) {
 				if (action.equals(1) && i.getQtd() >= 1) {
@@ -107,13 +137,19 @@ public class CarrinhoController {
 				break;
 			}
 		}
+		compra.setTotal(0.);
+		for (ProdutoPedido i : listaPedido) {
+			compra.setTotal(compra.getTotal() + i.getValorTotal());
+		}
 		model.addAttribute("listaItens", listaPedido);
 		return "redirect:/carrinho";
 	}
 
 	@GetMapping("/removerProd")
-	public String removerProdd(Long id, Model model, Integer action) {
+	public String removerProdd(Long id, Model model, Integer action,HttpServletRequest request) {
 		Produto produto = produtosdao.findById(id).orElse(null);
+		@SuppressWarnings("unchecked")
+		List<ProdutoPedido> listaPedido = (List<ProdutoPedido>) request.getSession().getAttribute("Meu_Carrinho");
 		for (ProdutoPedido i : listaPedido) {
 			if (i.getProduto().getId_produto().equals(id)) {
 				listaPedido.remove(i);
@@ -125,32 +161,51 @@ public class CarrinhoController {
 	}
 
 	@GetMapping("/finalizar")
-	public String finalizarCompra(Model model) {
-		calcularTotal();
+	public String finalizarCompra(Model model, HttpServletRequest request) {
+		@SuppressWarnings("unchecked")
+		List<ProdutoPedido> listaPedido = (List<ProdutoPedido>) request.getSession().getAttribute("Meu_Carrinho");
 		model.addAttribute("compra", compra);
 		model.addAttribute("listaItens", listaPedido);
 		model.addAttribute("usuarios", usuario);
 		return "finalizar";
 	}
-	
+
 	@PostMapping("/confirmarCompra")
-	public String confirmarCompra(HttpSession session,Compra compra, String usuario,String tipopagamento, String produtoo,String valor) {
+	public String confirmarCompra(HttpSession session, Compra compra, String usuario, String tipopagamento,
+			String produtoo, String valor) {
 		System.out.println(valor);
 		System.out.println(usuario);
-		if(usuario.length() >= 1) {
+		if (usuario.length() >= 1) {
 			Long id = Long.parseLong(usuario);
 			Usuarios usuarios = usuariosdao.findById(id).orElse(null);
 			compra.setUsuario(usuarios);
-		}else {
+		} else {
 			compra.setUsuario(null);
 		}
 		for (ProdutoPedido i : listaPedido) {
 			compra.setProdutos(listaPedido);
-			}
+		}
 
 		compra.setStatus(br.ifpe.pp2.models.compra.StatusPedido.Andamento);
 		comprasdao.save(compra);
 		return "redirect:/";
 	}
 
+	@PostMapping("/Comprar")
+	public String Comprar(String pagamento, Model model,HttpServletRequest request) {
+		@SuppressWarnings("unchecked")
+		List<ProdutoPedido> listaPedido = (List<ProdutoPedido>) request.getSession().getAttribute("Meu_Carrinho");
+		model.addAttribute("compra", compra);
+		model.addAttribute("listaItens", listaPedido);
+		model.addAttribute("usuarios", usuario);
+		compra.setUsuario(usuario);
+		compra.setStatus(compra.getStatus().Andamento);
+		compra.setFormaPagamento(pagamento);
+		comprasdao.save(compra);
+		for (ProdutoPedido c : listaPedido) {
+			c.setCompra(compra);
+			pedidosdao.save(c);
+		}
+		return "meusPedidos";
+	}
 }

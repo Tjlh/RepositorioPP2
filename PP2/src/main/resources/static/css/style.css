@@ -60,7 +60,10 @@ main{
 	font: bold 20px Arial;
 	color: white;
 }
-
+.bi-cart-dash{
+	font-size: 300px;
+	text-align: center;
+}
 .margin{
 	margin-top:5px;
 }

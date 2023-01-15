@@ -24,14 +24,14 @@ import jakarta.persistence.GenerationType;
 public class Compra {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codigo;
 	private StatusPedido status;
 	@ManyToOne(fetch= FetchType.LAZY)
 	private Usuarios usuario;
 	@DateTimeFormat(iso = ISO.DATE)
 	private Date dataCompra = new Date();
-	private TipoPagamento tipopagamento;
+	private String formaPagamento;
 	private Double total=0.;
 	@ManyToMany(    cascade = {
         CascadeType.PERSIST, 
@@ -70,11 +70,11 @@ public class Compra {
 	public void setDataCompra(Date dataCompra) {
 		this.dataCompra = dataCompra;
 	}
-	public TipoPagamento getTipopagamento() {
-		return tipopagamento;
+	public String getFormaPagamento() {
+		return formaPagamento;
 	}
-	public void setTipopagamento(TipoPagamento tipopagamento) {
-		this.tipopagamento = tipopagamento;
+	public void setFormaPagamento(String formaPagamento) {
+		this.formaPagamento = formaPagamento;
 	}
 	public Double getTotal() {
 		return total;

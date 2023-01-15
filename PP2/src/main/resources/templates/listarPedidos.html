@@ -28,9 +28,9 @@
 				<td >
 				<span  th:each="produto: ${cont.produtos}" th:text="@{${produto.produto.getNome()+';'+'&nbsp;'}}"></span>
 				</td>
-				<td th:text="${cont.total}"></td>
+				<td th:text="${'R$'+ #numbers.formatDecimal(cont.total,2,2)}"></td>
 				<td th:text="${cont.status}"></td>
-				<td th:text="${cont.tipopagamento}"></td>
+				<td th:text="${cont.formaPagamento}"></td>
 				<td><a th:href="|/editarPedido?codigo=${cont.codigo}|">Editar pedido</a></td>
 			</tr>
 		</table>

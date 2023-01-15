@@ -7,7 +7,7 @@
 	<header th:replace="~{/partials/pieces :: navbar}"></header>
 
 	<main class="container-sm">
-		<form action="/confirmarCompra" method="post" th:object="${compra}">
+		<form th:action="@{/Comprar}" method="post">
 			<table class="table table-hover">
 				<thead>
 					<tr>
@@ -17,11 +17,8 @@
 						<th class="font-input">Total</th>
 					</tr>
 				</thead>
-		 <input type="hidden" th:field="*{usuario}" th:name="usuario" th:value="${session.id}" />
-				
-				<tbody th:each="item : ${listaItens}" >
-		
-					 <input type="hidden" th:field="*{produtos}" th:name="produtoo" th:value="${listaItens}" />
+
+				<tbody th:each="item : ${listaItens}">
 
 					<tr>
 						<td class="col">
@@ -63,19 +60,24 @@
 				<tr>
 					<td><span class="font-input">Total</span></td>
 					<td></td>
-					<td><span class="font-input">R$</span><span class="font-input"  th:field="*{total}"
+					<td><span class="font-input">R$</span><span class="font-input"
 						th:text="${#numbers.formatDecimal(compra.total,0,2)}"></span></td>
 					<td></td>
-					 <input type="hidden" th:field="*{total}" th:name="valor" th:value="${#numbers.formatDecimal(compra.total,0,2)}" />
 				</tr>
 			</table>
 			<div> 
 				<select class="form-select" aria-label="Default select example"
-					name="tipopagamento" th:field="*{tipopagamento}" required>
+					name="pagamento">
+					<!--
 					<option th:value="''" disabled selected>Forma de Pagamento</option>
 					<option
 						th:each="pag : ${T(br.ifpe.pp2.models.compra.TipoPagamento).values}"
-						th:text="${pag}" th:value="${pag}"></option>
+						th:text="${pag.nome}" th:value="${pag}"></option>
+					-->
+					<option value="''">Forma de Pagamento</option>
+					<option value="Cartão">Cartão</option>
+					<option value="Dinheiro">Dinheiro</option>
+					<option value="PIX">PIX</option>
 				</select>
 			</div>
 			<div class="break"></div>
