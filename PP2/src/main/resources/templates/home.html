@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{/partials/pieces :: headBlock}">
-<title>Cantina Store</title>
 </head>
-
+<head><title>Cantina Store</title></head>
 <body>
 	<header th:replace="~{/partials/pieces :: navbar}"></header>
 	<main class="container main">
@@ -19,13 +18,13 @@
 		<section class="container-center">
 			<br />
 			<div th:each="tipo :${mostrarTipos}">
-				<h1 th:id="@{${tipo.nome}+'a'+${tipo.id_categoria}}"
+				<h1 th:id="@{'a'+${tipo.id_categoria}}"
 					th:text="${tipo.nome}"></h1>
 				<div th:each="prod: ${listarProdutos}">
 
 					<div class="div-produto" th:if="${prod.categorias==tipo}">
 						<div class="produto" data-bs-toggle="modal"
-							th:data-bs-target="@{'#a' +${prod.id_produto}}">
+							th:data-bs-target="@{'#b' +${prod.id_produto}}">
 							<div class="info-prod">
 								<div class="nome-prod" th:text="${prod.nome}"></div>
 								<div class="descricao-prod" th:text="${prod.descricao}"></div>
@@ -57,7 +56,7 @@
 		<!-- Modal produtos-->
 		<div>
 			<div th:each="prod: ${listarProdutos}" class="modal fade"
-				th:id="@{'a' + ${prod.id_produto}}" tabindex="-1"
+				th:id="@{'b' + ${prod.id_produto}}" tabindex="-1"
 				aria-labelledby="exampleModalLabel" aria-hidden=true>
 				<div class="modal-dialog">
 					<div class="modal-content">
@@ -88,12 +87,6 @@
 									src="https://rdironworks.com/wp-content/uploads/2017/12/dummy-200x200.png"
 									class="img-fluid" alt="" />
 
-							</div>
-						</div>
-						<div class="modal-body">
-							<div>
-								<label for="message-text" class="col-form-label">Observações:</label>
-								<textarea class="form-control" id="message-text"></textarea>
 							</div>
 						</div>
 						<div class="div-compras">

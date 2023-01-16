@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{/partials/pieces :: headBlock}">
-<title>Carrinho</title>
 </head>
+<head><title>Carrinho</title></head>
 <body>
 	<header th:replace="~{/partials/pieces :: navbar}"></header>
 
 	<main class="container-sm">
 		<form action="/confirmarCompra" method="post" th:object="${compra}">
+						 <input type="hidden"  th:name="idd" th:value="${session.id}" />
 			<table class="table table-hover">
 				<thead>
 					<tr>
@@ -22,7 +23,7 @@
 				<tbody th:each="item : ${listaItens}" >
 		
 					 <input type="hidden" th:field="*{produtos}" th:name="produtoo" th:value="${listaItens}" />
-
+	
 					<tr>
 						<td class="col">
 							<div th:if="${item.produto.getImagem.length>5}">
@@ -70,9 +71,18 @@
 				</tr>
 			</table>
 			<div> 
-				<select class="form-select" aria-label="Default select example"
+			<div class="modal-body">
+			<div th:if="${session.usuarioLogado!=null && session.id != '' && session.id!=null}">
+				<label for="message-text" class="col-form-label">Observações:</label>
+				<textarea class="form-control" id="message-text" maxlength=250 th:field="*{observacao}"></textarea>
+			</div>
+			<div th:unless="${session.usuarioLogado!=null && session.id != '' && session.id!=null}">
+				<label for="message-text" class="col-form-label">Observações: Insira o seu nome e contato para reconhecimento.</label>
+				<textarea class="form-control" id="message-text" th:field="*{observacao}" minlength=10 maxlength=250 required ></textarea>
+			</div>
+				<select class="form-select margin" aria-label="Default select example"
 					name="tipopagamento" th:field="*{tipopagamento}" required>
-					<option th:value="''" disabled selected>Forma de Pagamento</option>
+					<option th:value="''" selected>Forma de Pagamento</option>
 					<option
 						th:each="pag : ${T(br.ifpe.pp2.models.compra.TipoPagamento).values}"
 						th:text="${pag}" th:value="${pag}"></option>

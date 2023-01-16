@@ -2,10 +2,9 @@ package br.ifpe.pp2.models.compra;
 
 public enum StatusPedido {
 	Cancelado("Cancelado"),
-	Andamento("Andamento"),
+	Andamento("Em andamento"),
 	Concluido("Concluído");
-	
-	
+
 	private String nome;
 	
 	StatusPedido(String nome){

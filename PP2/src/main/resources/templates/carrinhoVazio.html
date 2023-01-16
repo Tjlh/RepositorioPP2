@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{/partials/pieces :: headBlock}">
+</head>
+<head><title>Carrinho</title></head>
+<body>
+	<header th:replace="~{/partials/pieces :: navbar}"></header>
+	<main>
+		<div class="container top-margin carrinhovazio">
+			<div >
+			<i class="bi-cart-dash" style="font-size: 15rem;"></i>
+			</div>
+			<div class="font-input text-white text-center">
+				<h1 class="text-dark">Carrinho Vazio!</h1>
+			</div>
+		</div>
+	</main>
+	<footer class="text-center">
+		<div th:replace="~{/partials/pieces :: footer}"></div>
+	</footer>
+</body>
+</html>

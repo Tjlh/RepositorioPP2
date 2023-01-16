@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{/partials/pieces :: headBlock}">
-<title>Meus Pedidos</title>
 </head>
+<head><title>Meus Pedidos</title>
+<meta http-equiv="refresh" content="30"></head>
 
 <body>
 	<header th:replace="~{/partials/pieces :: navbar}"></header>
@@ -10,20 +11,28 @@
 		<div>
 			<h4>Histórico de Pedidos</h4>
 		</div>
-		<div>
-			<div class="row bg-success">
-				<div class="col fs-2 font-input text-white">Pedido</div>
-				<div class="col fs-2 font-input text-white">Status</div>
-				<div class="col fs-2 font-input text-white">Valor</div>
-			</div>
-		</div>
-		<div>
-			<div class="row">
-				<div class="col fs-2"></div>
-				<div class="col fs-2"></div>
-				<div class="col fs-2 text-right"></div>
-			</div>
-		</div>
+		<table class="table table-bordered border-success">
+			<thead>
+				<tr>
+					<th scope="col">Data da compra</th>
+					<th scope="col">Pedido</th>
+					<th scope="col">Status</th>
+					<th scope="col">Valor</th>
+					<th scope="col">Forma de pagamento</th>
+				</tr>
+			</thead>
+			<tr th:each="cont : ${MostrarPedidos}" th:if="${cont.usuario!=null && cont.usuario.getId()==session.id}">
+
+				<td th:text="${{#dates.format(cont.dataCompra, 'dd/MM/yyyy - HH:mm')}}"></td>
+				<td>
+				<span  th:each="produto: ${cont.produtos}" th:text="@{${produto.getQtd()}+'x '+${produto.produto.getNome()+';'+'&nbsp;'}}"></span>
+				</td>
+				<td th:text="${cont.status.getNome()}"></td>
+				<td th:text="@{'R$'+${#numbers.formatDecimal(cont.total,0,2)}}"></td>
+				<td th:text="${cont.tipopagamento}"></td>
+
+			</tr>
+		</table>
 	</main>
 	<footer class="text-center">
 		<div th:replace="~{/partials/pieces :: footer}"></div>

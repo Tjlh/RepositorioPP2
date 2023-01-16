@@ -1,52 +1,47 @@
 <!DOCTYPE html>
 <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{/partials/pieces :: headBlock}">
-<title>Modificar Protudos</title>
 </head>
+<head><title>Modificar Protudos</title></head>
 <body>
 	<header th:replace="~{/partials/pieces :: navbar}"></header>
 	<main>
-		<form th:action="@{/modificarProduto}" method="post"
-			enctype="multipart/form-data" th:object="${compra}">
+		<form th:action="@{/modificarProduto}" method="post" th:object="${compra}">
 			<div class="container">
 				<h1>Realizar alteração de produtos</h1>
 				<input type="hidden" th:field="*{codigo}">
 				<div class="mb-3">
 					<label for="exampleFormControlInput1" class="form-label font-input">Nome
 						do produto</label> <input type="text" class="form-control"
-						id="exampleFormControlInput1" th:field="*{nome}"
-						placeholder="Nome do produto">
+						id="exampleFormControlInput1" th:field="*{produtos}"
+						placeholder="Produtos e quantidades">
 				</div>
 				<div class="input-group mb-3">
-					<span class="input-group-text">R$</span> <input type="number"
+					<span class="input-group-text">Total R$</span> <input type="number"
 						class="form-control" step="0.01" th:field="*{total}">
 				</div>
 				<div class="input-group mb-3">
 					<span class="input-group-text">Estoque </span> <input type="tel"
-						class="form-control" th:field="*{estoque}">
+						class="form-control">
 				</div>
-				<label for="categoria" class="form-label font-input">Categoria
-					do produto</label> <select class="form-select form-select-sm"
+				<label for="categoria" class="form-label font-input">Status</label> 
+				<select class="form-select form-select-sm"
 					id="categoria" aria-label=".form-select-sm example"
-					th:field="*{categorias}">
-					<option th:each="tipo : ${tipoAlimento}" th:text="${tipo.nome}"
-						th:value="${tipo.id_categoria}"></option>
+					th:field="*{status}">
+				<option th:each="status : ${T(br.ifpe.pp2.models.compra.StatusPedido).values}"
+						th:text="${status}" th:value="${status}"></option>
+						
 				</select>
 				<div class="break"></div>
 				<div class="mb-3">
 					<label for="exampleFormControlTextarea1"
-						class="form-label font-input">Descrição do produto</label>
+						class="form-label font-input">Observação</label>
 					<textarea class="form-control" id="exampleFormControlTextarea1"
-						th:field="*{descricao}" rows="3"></textarea>
-				</div>
-				<div class="mb-3">
-					<label for="formFile" class="form-label font-input">Insira
-						a foto do produto</label> <input class="form-control" name="file"
-						accept="image/*" type="file" id="formFile">
+						rows="3"></textarea>
 				</div>
 				<div class="d-grid gap-2">
 					<button class="font-input btn btn-success" type="submit">
-						Alterar produto</button>
+						Alterar pedido</button>
 				</div>
 			</div>
 		</form>

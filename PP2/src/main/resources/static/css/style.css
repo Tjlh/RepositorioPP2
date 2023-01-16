@@ -83,7 +83,9 @@ main{
 .container-left {
 	padding: 10px;
 }
-
+.alterarpedido{
+	margin: 5px 20px 0 20px;
+}
 .div-produto {
 	display: grid;
 	width: auto;
@@ -93,7 +95,12 @@ main{
 	border-radius: 5px;
 	box-shadow: 2px 2px 2px 2px gray;
 }
-
+.carrinhovazio{
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 .produto {
 	border-radius: 3px;
 	display: flex;

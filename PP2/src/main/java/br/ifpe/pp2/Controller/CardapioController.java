@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import br.ifpe.pp2.models.produtos.Produto;
 import br.ifpe.pp2.models.produtos.ProdutoDAO;
+import br.ifpe.pp2.models.compra.CompraDAO;
 import br.ifpe.pp2.models.produtos.CategoriasDAO;
 import br.ifpe.pp2.models.usuarios.Usuarios;
 import br.ifpe.pp2.models.usuarios.UsuariosDAO;
@@ -26,6 +27,8 @@ public class CardapioController {
 	private ProdutoDAO produtosdao;
 	@Autowired
 	private CategoriasDAO categoriadao;
+	@Autowired
+	private CompraDAO compradao;
 	
 	@GetMapping("/")
 	public String produtos(Produto produto, Model model) {
@@ -51,7 +54,8 @@ public class CardapioController {
 	}
 	
 	@GetMapping("/meuspedidos")
-	public String meusPedidos() {
+	public String meusPedidos(Model model) {
+		model.addAttribute("MostrarPedidos", compradao.findAll());
 		return "meusPedidos";
 	}
 	

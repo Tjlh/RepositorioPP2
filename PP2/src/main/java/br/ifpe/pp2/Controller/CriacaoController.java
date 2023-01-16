@@ -45,7 +45,7 @@ public class CriacaoController {
 		if (email != null && usuariosdao.findByEmail(email) == null) {
 			usuariosdao.save(usuarios);
 			redirect.addFlashAttribute("sucess", "Conta criada com sucesso.");
-			return "redirect:/cadastro";
+			return "redirect:/login";
 
 		} else {
 			redirect.addFlashAttribute("falha", "Falha ao criar conta, email existente.");
@@ -55,7 +55,7 @@ public class CriacaoController {
 	}
 
 	@PostMapping("/alterardados")
-	public String alterarDados(Usuarios usuarios, String nome, Boolean tipo, String email, RedirectAttributes redirect,
+	public String alterarDados(Usuarios usuarios, String senha, String nome, Boolean tipo, String email, RedirectAttributes redirect,
 			String numero, HttpSession session) {
 		String id = session.getAttribute("id").toString();
 		long codigo = Long.parseLong(id);
@@ -69,10 +69,16 @@ public class CriacaoController {
 		if (email != null && usuariosdao.findByEmail(email) == null) {
 			encontrado.setEmail(email);
 			redirect.addFlashAttribute("sucess", "Email alterado com sucesso.");
+		}else {
+			redirect.addFlashAttribute("falha", "Email existente ou nulo.");
 		}
 		if (numero != null) {
 			encontrado.setTelefone(numero);
 			redirect.addFlashAttribute("sucess", "Número alterado com sucesso.");
+		}
+		if (senha != null) {
+			encontrado.setTelefone(senha);
+			redirect.addFlashAttribute("sucess", "Senha alterada com sucesso.");
 		}
 		usuariosdao.save(encontrado);
 		session.setAttribute("usuarioLogado", encontrado);
@@ -150,16 +156,5 @@ public class CriacaoController {
 		return "redirect:/gerenciamento";
 	}
 
-	@GetMapping("/modificarPedidos")
-	public String modificarPedidos(Model model) {
-		model.addAttribute("MostrarPedidos", compradao.findAll());
-		return "listarPedidos";
-	}
-
-	@GetMapping("/editarPedido")
-	public String editarPedido(Compra pedidos,Model model, Long codigo) {
-		model.addAttribute("pedido", compradao.findById(codigo).orElse(null));
-		return "modificarPedido";
-	}
 
 }

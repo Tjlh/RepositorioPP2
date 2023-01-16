@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{/partials/pieces :: headBlock}">
-<title>Gerenciamento de pedidos</title>
 </head>
+<head><title>Gerenciamento de pedidos</title></head>
 <body>
 	<header th:replace="~{/partials/pieces :: navbar}"></header>
 
@@ -41,7 +41,7 @@
 
 		</div>
 		<div class="row">
-			<div class="collapse multi-collapse" id="criarCategoria">
+			<div class="collapse multi-collapse margin" id="criarCategoria">
 				<div class="card card-body">
 
 					<form th:action="@{/criarnovotipo}" method="post"
@@ -63,7 +63,7 @@
 					</form>
 				</div>
 			</div>
-			<div class="collapse multi-collapse" id="modificarCategoria">
+			<div class="collapse multi-collapse margin" id="modificarCategoria">
 				<div class="card card-body">
 					<form th:action="@{/modificarcategoria}" method="post"
 						th:object="${categorias}">
@@ -94,7 +94,7 @@
 			</div>
 		</div>
 		<div class="col">
-			<div class="collapse multi-collapse" id="cadastroProduto">
+			<div class="collapse multi-collapse margin" id="cadastroProduto">
 				<div class="card card-body">
 					<form th:action="@{/criarnovoproduto}" method="post"
 						enctype="multipart/form-data" th:object="${produto}">
@@ -143,7 +143,7 @@
 			</div>
 		</div>
 		<div class="col">
-			<div class="collapse multi-collapse" id="modificarProduto">
+			<div class="collapse multi-collapse margin" id="modificarProduto">
 				<div class="card card-body">
 					<table class="table table-bordered border-success">
 						<thead>

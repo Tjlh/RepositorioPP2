@@ -2,8 +2,9 @@
 <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="~{/partials/pieces :: headBlock}">
-<title>Modificar Pedidos</title>
 </head>
+<head><title>Modificar Pedidos</title>
+<meta http-equiv="refresh" content="180"></head>
 
 <body>
 	<header th:replace="~{/partials/pieces :: navbar}"></header>
@@ -14,10 +15,12 @@
 					<th scope="col">Comprado por</th>
 					<th scope="col">Contato</th>
 					<th scope="col">Itens</th>
+					<th scope="col">Observações</th>
 					<th scope="col">Valor</th>
 					<th scope="col">Status</th>
 					<th scope="col">Forma de pagamento</th>
 					<th scope="col">Editar Pedido</th>
+					<th scope="col">Data da compra</th>
 				</tr>
 			</thead>
 			<tr th:each="cont : ${MostrarPedidos}">
@@ -26,12 +29,26 @@
 				<td th:if="${cont.usuario == null}" th:text="@{'Contato indisponível'}"></td>	
 				<td th:unless="${cont.usuario==null}" th:text="${cont.usuario.getTelefone()}"></td>
 				<td >
-				<span  th:each="produto: ${cont.produtos}" th:text="@{${produto.produto.getNome()+';'+'&nbsp;'}}"></span>
+	<span th:each="produto: ${cont.produtos}" th:text="@{${produto.getQtd()}+'x '+${produto.produto.getNome()+';'+'&nbsp;'}}"></span>				</td>
+				<td th:text="${cont.getObservacao()}"></td>
+				<td th:text="@{'R$'+${#numbers.formatDecimal(cont.total,0,2)}}"></td>
+				<td >
+				<form th:action="@{/alterandoPedido}" method="post">
+						<input type="hidden" name="codigo" th:value="${cont.getCodigo()}">
+				<select class="form-select form-select-sm" style="width: auto;" name="status"
+					aria-label=".form-select-sm example">
+			
+				<option th:each="status : ${T(br.ifpe.pp2.models.compra.StatusPedido).values}" th:selected="(${cont.status.getNome()} == ${status.getNome()})" 
+						th:text="${status.getNome()}" th:value="${status}"  ></option>						
+				</select>
+				<input class="btn btn-primary alterarpedido" type="submit" value="Alterar">
+				
+				</form>
 				</td>
-				<td th:text="${cont.total}"></td>
-				<td th:text="${cont.status}"></td>
 				<td th:text="${cont.tipopagamento}"></td>
 				<td><a th:href="|/editarPedido?codigo=${cont.codigo}|">Editar pedido</a></td>
+				<td th:text="${{#dates.format(cont.dataCompra, 'dd/MM/yyyy - HH:mm')}}"></td>
+
 			</tr>
 		</table>
 	</main>

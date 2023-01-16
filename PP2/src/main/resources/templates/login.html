@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{/partials/pieces :: headBlock}">
-<title>Login</title>
 </head>
+<head><title>Login</title></head>
 
 <body>
 	<header th:replace="~{/partials/pieces :: navbar}"></header>
 
 	<main class="container">
+	<div th:if="${sucess}" class="alerta">
+			<div class="alert alert-success" role="alert">
+				<p th:utext="${sucess}"></p>
+			</div>
+		</div>
 		<div th:if="${mensagemErro}" class="alerta">
 			<div class="alert alert-danger" role="alert">
 				<p th:utext="${mensagemErro}"></p>

@@ -32,6 +32,7 @@ public class Compra {
 	@DateTimeFormat(iso = ISO.DATE)
 	private Date dataCompra = new Date();
 	private TipoPagamento tipopagamento;
+	private String observacao;
 	private Double total=0.;
 	@ManyToMany(    cascade = {
         CascadeType.PERSIST, 
@@ -81,6 +82,12 @@ public class Compra {
 	}
 	public void setTotal(Double total) {
 		this.total = total;
+	}
+	public String getObservacao() {
+		return observacao;
+	}
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
 	}
 
 }

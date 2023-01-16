@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.ifpe.pp2.models.compra.Compra;
 import br.ifpe.pp2.models.compra.CompraDAO;
+import br.ifpe.pp2.models.compra.StatusPedido;
 import br.ifpe.pp2.models.compra.TipoPagamento;
 import br.ifpe.pp2.models.produtos.Produto;
 import br.ifpe.pp2.models.produtos.ProdutoDAO;
@@ -52,10 +53,14 @@ public class CarrinhoController {
 
 	@GetMapping("/carrinho")
 	public String carrinho(Model model) {
+		if (listaPedido == null || listaPedido.size() == 0) {			
+			return "carrinhoVazio";
+		} 
 		calcularTotal();
 		model.addAttribute("compra", compra);
 		model.addAttribute("listaItens", listaPedido);
 		return "carrinho";
+	
 	}
 	
 	@GetMapping("/addCarrinho")
@@ -132,13 +137,33 @@ public class CarrinhoController {
 		model.addAttribute("usuarios", usuario);
 		return "finalizar";
 	}
+	@GetMapping("/modificarPedidos")
+	public String modificarPedidos(Model model,Compra compra) {		
+		model.addAttribute("MostrarPedidos", comprasdao.findAll());
+		return "listarPedidos";
+	}
+
+	@GetMapping("/editarPedido")
+	public String editarPedido(Compra compra,Model model, Long codigo) {
+		model.addAttribute("pedido", comprasdao.findById(codigo).orElse(null));
+		return "modificarPedido";
+	}
 	
+	@PostMapping("/alterandoPedido")
+	public String alterarPedido(Long codigo,StatusPedido status) {
+		Compra compra = comprasdao.findById(codigo).orElse(null);
+		System.out.println(status);
+		compra.setStatus(status);		
+		System.out.println(compra.getStatus());
+		comprasdao.save(compra);
+		return "redirect:/modificarPedidos";
+	}
 	@PostMapping("/confirmarCompra")
-	public String confirmarCompra(HttpSession session,Compra compra, String usuario,String tipopagamento, String produtoo,String valor) {
-		System.out.println(valor);
-		System.out.println(usuario);
-		if(usuario.length() >= 1) {
-			Long id = Long.parseLong(usuario);
+	public String confirmarCompra(HttpSession session,String idd,Compra compra, String usuario,String tipopagamento, String produtoo,String valor) {
+		
+		System.out.println(idd);
+		if(idd!=null && idd!="") {
+			Long id = Long.parseLong(idd);
 			Usuarios usuarios = usuariosdao.findById(id).orElse(null);
 			compra.setUsuario(usuarios);
 		}else {
@@ -147,10 +172,14 @@ public class CarrinhoController {
 		for (ProdutoPedido i : listaPedido) {
 			compra.setProdutos(listaPedido);
 			}
-
 		compra.setStatus(br.ifpe.pp2.models.compra.StatusPedido.Andamento);
 		comprasdao.save(compra);
-		return "redirect:/";
+		listaPedido.clear();
+		if(session.getAttribute("usuarioLogado") != null) {
+			return "redirect:/meuspedidos";
+		}else {
+			return "redirect:/";			
+		}
 	}
 
 }
