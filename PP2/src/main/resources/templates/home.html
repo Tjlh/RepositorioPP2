@@ -2,10 +2,12 @@
 <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{/partials/pieces :: headBlock}">
 </head>
-<head><title>Cantina Store</title></head>
+<head>
+<title>Cantina Store</title>
+</head>
 <body>
 	<header th:replace="~{/partials/pieces :: navbar}"></header>
-	<main class="container main">
+	<main class="container-xxl">
 		<div class="container-center">
 			<nav class="nav" style="gap: 10px;">
 				<div class="nav-scroller bg-body" th:each="tipo :${mostrarTipos}">
@@ -18,32 +20,34 @@
 		<section class="container-center">
 			<br />
 			<div th:each="tipo :${mostrarTipos}">
-				<h1 th:id="@{'a'+${tipo.id_categoria}}"
-					th:text="${tipo.nome}"></h1>
-				<div th:each="prod: ${listarProdutos}">
+				<h1 th:id="@{'a'+${tipo.id_categoria}}" th:text="${tipo.nome}"></h1>
+				<div class="div-produto">
 
-					<div class="div-produto" th:if="${prod.categorias==tipo}">
-						<div class="produto produtos" data-bs-toggle="modal"
-							th:data-bs-target="@{'#b' +${prod.id_produto}}">
-							<div class="info-prod">
-								<div class="nome-prod" th:text="${prod.nome}"></div>
-								<div class="descricao-prod" th:text="${prod.descricao}"></div>
-								<div class="preco-prod">
-									<span style="font-weight: bold;">R$</span> <span
-										th:text="${#numbers.formatDecimal(prod.preco,0,2)}"></span>
+					<div th:each="prod: ${listarProdutos}">
+
+						<div th:if="${prod.categorias==tipo}">
+							<div class="produto" data-bs-toggle="modal"
+								th:data-bs-target="@{'#b' +${prod.id_produto}}">
+								<div class="info-prod">
+									<div class="nome-prod" th:text="${prod.nome}"></div>
+									<div class="descricao-prod" th:text="${prod.descricao}"></div>
+									<div class="preco-prod">
+										<span style="font-weight: bold;">R$</span> <span
+											th:text="${#numbers.formatDecimal(prod.preco,0,2)}"></span>
+									</div>
 								</div>
-							</div>
-							<div>
-								<div th:if="${prod.imagem.length>5}">
-									<img th:src="|/foto/${prod.id_produto}|" class="imagens"
-										th:alt="${prod.nome}" />
+								<div>
+									<div th:if="${prod.imagem.length>5}">
+										<img th:src="|/foto/${prod.id_produto}|" class="imagens"
+											th:alt="${prod.nome}" />
 
-								</div>
-								<div th:if="${prod.imagem.length==0}">
-									<img
-										src="https://rdironworks.com/wp-content/uploads/2017/12/dummy-200x200.png"
-										class="imagens" alt="" />
+									</div>
+									<div th:if="${prod.imagem.length==0}">
+										<img
+											src="https://rdironworks.com/wp-content/uploads/2017/12/dummy-200x200.png"
+											class="imagens" alt="" />
 
+									</div>
 								</div>
 							</div>
 						</div>

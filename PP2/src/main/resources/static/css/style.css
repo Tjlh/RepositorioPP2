@@ -1,72 +1,49 @@
 body {
-	padding-top: 32px;	
+	padding-top: 48px;
 	display: flex;
 	flex-direction: column;
-	min-height:100vh;
+	min-height: 100vh;
 }
-main{
+
+main {
 	flex: 1;
 }
+
 .break {
 	position: relative;
 	top: 100%;
-	height: 10px;
-}
-@media ( min-width : 435px) and (max-width: 576px) {
-	.modal {
-		width: 145vw;
-		height: 200vh;
-	}
-	.modal-sm {
-		width: 23rem;
-		height: 200vh;
-	}
+	height: 8px;
 }
 
-@media ( max-width : 434px) {
-	.modal {
-		margin-top: 10px;
-		max-width: 500px;
-		height: 700px;
-	}
-	.modal-sm {
-		width: 23rem;
-		height: 200vh;
-	}
-	.imagens {
-		max-width: 100px;
-		height: 120px;
-	}
-	.botao {
-		width: 75px;
-		height: 35px;
-	}
-	.botao-md {
-		width: 102px;
-		height: 80px;
-	}
-
-}
 .nav-link {
-	font: bold 20px Arial;
+	font: bold 18px Arial;
 }
-.bt-edit{
+
+.bt-edit {
 	color: #198754
 }
-.bt-rm{
+
+.bt-rm {
 	color: #DC3545
 }
+
 .navbar-toggler {
-	font: bold 20px Arial;
+	font: bold 18px Arial;
 	color: white;
+	height: 40px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
-.margin{
-	margin-top:5px;
+.margin {
+	margin-top: 8px;
 }
-.produtos{
+
+.produtos {
 	cursor: pointer;
 }
+
 .navbar-toggler:hover {
 	background-color: gray;
 }
@@ -84,34 +61,51 @@ main{
 }
 
 .container-left {
-	padding: 10px;
+	padding: 8px;
 }
-.alterarpedido{
-	margin: 5px 20px 0 20px;
+
+.alterarpedido {
+	margin: 8px 24px 0 20px;
 }
+
 .div-produto {
 	display: grid;
+	grid-template-columns: auto auto;
 	width: auto;
 	align-content: start;
-	padding: 10px;
-	gap: 10px;
-	border-radius: 5px;
+	padding: 8px;
+	gap: 8px;
+	border-radius: 8px;
 	box-shadow: 2px 2px 2px 2px gray;
 }
-.carrinhovazio{
-	display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
+
 .produto {
-	border-radius: 3px;
+	border-radius: 8px;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	width: auto;
-	padding: 10px;
+	max-width: 640px;
+	padding: 8px;
 	box-shadow: 2px 2px 2px 2px gray;
+}
+
+.div-borda {
+	align-content: start;
+	padding: 8px;
+	gap: 8px;
+	border-radius: 8px;
+	box-shadow: 2px 2px 2px 2px gray;
+}
+
+.carrinhovazio {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
 }
 
 .info-prod {
@@ -124,16 +118,17 @@ main{
 }
 
 .descricao-prod {
-	height: 33%;
+	height: 56px;
 	margin-top: 10px;
 	color: black;
-	font: normal 14px Arial;
+	font: normal 16px Arial;
+	overflow: hidden;
 }
 
 .preco-prod {
 	height: 33%;
 	margin-top: 10px;
-	height: 25px;
+	height: 24px;
 	color: green;
 }
 
@@ -141,10 +136,12 @@ main{
 	width: 200px;
 	height: 150px;
 }
-.imagens-bp{
+
+.imagens-bp {
 	width: 40px;
 	height: 40px;
 }
+
 .produto:hover {
 	background-color: rgb(223, 223, 223);
 }
@@ -155,8 +152,8 @@ main{
 	width: auto;
 	display: flex;
 	justify-content: center;
-	padding: 10px;
-	gap: 10px;
+	padding: 8px;
+	gap: 8px;
 	grid-template-columns: auto auto auto auto;
 }
 
@@ -164,17 +161,17 @@ main{
 	width: auto;
 	max-width: 130px;
 	border: solid 1px black;
-	border-radius: 5px;
+	border-radius: 8px;
 	height: 40px;
 	text-align: center;
 }
 
 .input-qtd {
 	border: solid 0.5px black;
-	border-radius: 5px;
+	border-radius: 8px;
 	width: 40px;
 	height: 40px;
-	gap: 20px;
+	gap: 16px;
 	text-align: center;
 }
 
@@ -199,23 +196,54 @@ main{
 	background-color: #198754;
 	font: bold 18px Arial;
 	width: 100px;
-	height: 50px;
+	height: 48px;
 	border: solid 0.5px #198754;
-	border-radius: 5px;
+	border-radius: 8px;
 }
 
 .botao-md {
 	background-color: #198754;
 	font: bold 18px Arial;
 	width: 300px;
-	height: 50px;
+	height: 48px;
 	border: solid 0.5px #198754;
-	border-radius: 5px;
+	border-radius: 8px;
 }
 
 .rodape {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	height: 50px;
+	height: 56px;
+}
+
+.tabela {
+	overflow-x: auto;
+}
+
+@media ( max-width : 654px) {
+	.div-produto {
+		grid-template-columns: auto;
+	}
+	.modal {
+		margin-top: 10px;
+		max-width: 500px;
+		height: 700px;
+	}
+	.modal-sm {
+		width: 23rem;
+		height: 200vh;
+	}
+	.imagens {
+		max-width: 100px;
+		height: 120px;
+	}
+	.botao {
+		width: 75px;
+		height: 35px;
+	}
+	.botao-md {
+		width: 102px;
+		height: 80px;
+	}
 }

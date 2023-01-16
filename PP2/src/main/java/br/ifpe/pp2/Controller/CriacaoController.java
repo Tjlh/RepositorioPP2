@@ -176,6 +176,10 @@ public class CriacaoController {
 		produtosdao.deleteById(id);
 		return "redirect:/gerenciamento";
 	}
-
+	
+	@GetMapping("/projeto")
+	public String projeto() {
+		return "admin/projeto";
+	}
 
 }

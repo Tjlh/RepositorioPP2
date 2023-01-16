@@ -3,54 +3,68 @@
 
 <head th:replace="~{/partials/pieces :: headBlock}">
 </head>
-<head><title>Modificar Pedidos</title>
-<meta http-equiv="refresh" content="180"></head>
+<head>
+<title>Modificar Pedidos</title>
+<meta http-equiv="refresh" content="180">
+</head>
 
 <body>
 	<header th:replace="~{/partials/pieces :: navbar}"></header>
-	<main class="container main">
-		<table class="table table-bordered border-success">
-			<thead>
-				<tr>
-					<th scope="col">Comprado por</th>
-					<th scope="col">Contato</th>
-					<th scope="col">Itens</th>
-					<th scope="col">Observações</th>
-					<th scope="col">Valor</th>
-					<th scope="col">Status</th>
-					<th scope="col">Forma de pagamento</th>
-					<th scope="col">Editar Pedido</th>
-					<th scope="col">Data da compra</th>
-				</tr>
-			</thead>
-			<tr th:each="cont : ${MostrarPedidos}">
-				<td th:if="${cont.usuario == null}" th:text="@{'Anônimo'}"></td>	
-				<td th:unless="${cont.usuario==null}" th:text="${cont.usuario.getNome()}"></td>
-				<td th:if="${cont.usuario == null}" th:text="@{'Contato indisponível'}"></td>	
-				<td th:unless="${cont.usuario==null}" th:text="${cont.usuario.getTelefone()}"></td>
-				<td >
-	<span th:each="produto: ${cont.produtos}" th:text="@{${produto.getQtd()}+'x '+${produto.produto.getNome()+';'+'&nbsp;'}}"></span>				</td>
-				<td th:text="${cont.getObservacao()}"></td>
-				<td th:text="@{'R$'+${#numbers.formatDecimal(cont.total,0,2)}}"></td>
-				<td >
-				<form th:action="@{/alterandoPedido}" method="post">
-						<input type="hidden" name="codigo" th:value="${cont.getCodigo()}">
-				<select class="form-select form-select-sm" style="width: auto;" name="status"
-					aria-label=".form-select-sm example">
-			
-				<option th:each="status : ${T(br.ifpe.pp2.models.compra.StatusPedido).values}" th:selected="(${cont.status.getNome()} == ${status.getNome()})" 
-						th:text="${status.getNome()}" th:value="${status}"  ></option>						
-				</select>
-				<input class="btn btn-primary alterarpedido" type="submit" value="Alterar">
-				
-				</form>
-				</td>
-				<td th:text="${cont.tipopagamento}"></td>
-				<td><a th:href="|/editarPedido?codigo=${cont.codigo}|">Editar pedido</a></td>
-				<td th:text="${{#dates.format(cont.dataCompra, 'dd/MM/yyyy - HH:mm')}}"></td>
+	<main class="container-fluid">
+		<div class="tabela">
+			<table class="table table-striped table-bordered border-success">
+				<thead>
+					<tr>
+						<th scope="col">Comprado por</th>
+						<th scope="col">Contato</th>
+						<th scope="col">Itens</th>
+						<th scope="col">Observações</th>
+						<th scope="col">Valor</th>
+						<th scope="col">Status</th>
+						<th scope="col">Forma de pagamento</th>
+						<th scope="col">Editar Pedido</th>
+						<th scope="col">Data da compra</th>
+					</tr>
+				</thead>
+				<tr th:each="cont : ${MostrarPedidos}">
+					<td th:if="${cont.usuario == null}" th:text="@{'Anônimo'}"></td>
+					<td th:unless="${cont.usuario==null}"
+						th:text="${cont.usuario.getNome()}"></td>
+					<td th:if="${cont.usuario == null}"
+						th:text="@{'Contato indisponível'}"></td>
+					<td th:unless="${cont.usuario==null}"
+						th:text="${cont.usuario.getTelefone()}"></td>
+					<td><span th:each="produto: ${cont.produtos}"
+						th:text="@{${produto.getQtd()}+'x '+${produto.produto.getNome()+';'+'&nbsp;'}}"></span>
+					</td>
+					<td th:text="${cont.getObservacao()}"></td>
+					<td th:text="@{'R$'+${#numbers.formatDecimal(cont.total,0,2)}}"></td>
+					<td>
+						<form th:action="@{/alterandoPedido}" method="post">
+							<input type="hidden" name="codigo" th:value="${cont.getCodigo()}">
+							<div class="d-grid gap-2">
+								<select class="form-select form-select-sm" style="width: auto;"
+									name="status" aria-label=".form-select-sm example">
 
-			</tr>
-		</table>
+									<option
+										th:each="status : ${T(br.ifpe.pp2.models.compra.StatusPedido).values}"
+										th:selected="(${cont.status.getNome()} == ${status.getNome()})"
+										th:text="${status.getNome()}" th:value="${status}"></option>
+								</select>
+								<input class="btn btn-success" type="submit"
+									value="Alterar">
+							</div>
+						</form>
+					</td>
+					<td th:text="${cont.tipopagamento}"></td>
+					<td><a th:href="|/editarPedido?codigo=${cont.codigo}|">Editar
+							pedido</a></td>
+					<td
+						th:text="${{#dates.format(cont.dataCompra, 'dd/MM/yyyy - HH:mm')}}"></td>
+
+				</tr>
+			</table>
+		</div>
 	</main>
 	<footer class="text-center">
 		<div th:replace="~{/partials/pieces :: footer}"></div>

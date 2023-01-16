@@ -4,8 +4,10 @@
 <head>
 <th:block th:fragment="headBlock">
 	<link rel="apple-touch-icon" sizes="180x180" href="/assets/logo_cs.png">
-	<link rel="icon" type="image/png" sizes="32x32" href="/assets/logo_cs.png">
-	<link rel="icon" type="image/png" sizes="16x16" href="/assets/logo_cs.png">
+	<link rel="icon" type="image/png" sizes="32x32"
+		href="/assets/logo_cs.png">
+	<link rel="icon" type="image/png" sizes="16x16"
+		href="/assets/logo_cs.png">
 	<link rel="manifest" href="/site.webmanifest">
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,7 +15,7 @@
 	<link rel="stylesheet" href="/css/style.css" />
 	<link rel="stylesheet"
 		href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
-			<script src="https://kit.fontawesome.com/c50c64824e.js"
+	<script src="https://kit.fontawesome.com/c50c64824e.js"
 		crossorigin="anonymous"></script>
 	<script src="/js/bootstrap.bundle.min.js"></script>
 	<script src="/js/scripts.js"></script>
@@ -49,49 +51,91 @@
 							</div>
 							<div class="offcanvas-body">
 								<ul class="navbar-nav me-auto mb-2">
-									<li class="nav-item"><a class="nav-link text-white"
-										href="/"><span class="bi bi-table"> Cardapio</span></a></li>
+									<li class="nav-item">
+										<div class="d-grid gap-2">
+											<a class="btn btn-outline-light btn-lg text-start" href="/"><span
+												class="bi bi-table"></span><span class="font-input">
+													Cardapio</span></a>
+										</div>
+									</li>
 									<li
 										th:if="${session.tipo != null || session.usuarioLogado != null}"
-										class="nav-item"><a class="nav-link text-white"
-										href="/meuspedidos"><span class="bi bi-table"> Meus
-												Pedidos</span></a></li>
-									<li th:if="${session.usuarioLogado}" class="nav-item"><a
-										class="nav-link text-white" href="/minhaconta"><span
-											class="bi bi-person-circle"> Minha Conta</span></a></li>
-									<li th:unless="${session.usuarioLogado}" class="nav-item">
-										<a class="nav-link text-white" href="/cadastro"><span
-											class="bi bi-person-add font-input"> Criar Conta</span></a>
+										class="nav-item">
+										<div class="break"></div>
+										<div class="d-grid gap-2">
+											<a class="btn btn-outline-light btn-lg text-start" href="/meuspedidos"><span
+												class="bi bi-card-list"></span> <span class="font-input"> Meus
+													Pedidos</span></a>
+										</div>
 									</li>
-									<li th:unless="${session.usuarioLogado}" class="nav-item">
-										<a class="nav-link text-white" href="/login"> <span
-											class="bi bi-person-circle"> Login</span>
-									</a>
+									<li th:if="${session.usuarioLogado}" class="nav-item">
+										<div class="break"></div>
+										<div class="d-grid gap-2">
+											<a class="btn btn-outline-light btn-lg text-start" href="/minhaconta"><span
+												class="bi bi-person-circle"></span><span class="font-input"> Minha
+													Conta</span></a>
+										</div>
 									</li>
-									<li th:if="${session.tipo==true || session.tipo=='admin'}"
-										class="nav-item"><a class="nav-link text-white"
-										href="/gerenciamento"> <span class="bi bi-clipboard2-data"></span>
-											Gerenciamento
-									</a></li>
-									<li th:if="${session.tipo=='admin'}" class="nav-item"><a
-										class="nav-link text-white" href="/admin/index"> <span
-											class="bi bi-person-fill-gear"> Dados dos Usuarios</span>
-									</a></li>
-									<li th:if="${session.tipo=='admin' || session.tipo==true}"
-										class="nav-item"><a class="nav-link text-white"
-										href="/modificarPedidos"> <span
-											class="bi bi-person-fill-gear"> Modificar pedidos</span>
-									</a></li>
+									<li th:unless=" ${session.usuarioLogado}" class="nav-item">
+										<div class="break"></div>
+										<div class="d-grid gap-2">
+											<a class="btn btn-outline-light btn-lg text-start" href="/cadastro"><span
+												class="bi bi-person-add font-input"></span> <span
+												class="font-input"> Criar Conta</span></a>
+										</div>
+									</li>
 
+									<li th:unless=" ${session.usuarioLogado}" class="nav-item">
+										<div class="break"></div>
+										<div class="d-grid gap-2">
+											<a class="btn btn-outline-light btn-lg text-start" href="/login"> <span
+												class="bi bi-person-circle"> </span> <span
+												class="font-input"> Login</span>
+											</a>
+										</div>
+									</li>
+
+									<li th:if="${session.tipo==true || session.tipo=='admin'}"
+										class="nav-item">
+										<div class="break"></div>
+										<div class="d-grid gap-2">
+											<a class="btn btn-outline-light btn-lg text-start" href="/gerenciamento">
+												<span class="bi bi-clipboard2-data"></span><span
+												class="font-input"> Gerenciamento</span>
+											</a>
+										</div>
+									</li>
+									<li th:if="${session.tipo=='admin'}" class="nav-item">
+										<div class="break"></div>
+										<div class="d-grid gap-2">
+											<a class="btn btn-outline-light btn-lg text-start" href="/admin/index">
+												<span class="bi bi-person-fill-gear"></span><span
+												class="font-input"> Dados dos Usuarios</span>
+											</a>
+										</div>
+									</li>
+									<li th:if="${session.tipo=='admin' || session.tipo==true}"
+										class="nav-item">
+										<div class="break"></div>
+										<div class="d-grid gap-2">
+											<a class="btn btn-outline-light btn-lg text-start"
+												href="/modificarPedidos"> <span
+												class="bi bi-pencil-square"></span><span
+												class="font-input"> Modificar pedidos</span>
+											</a>
+										</div>
+									</li>
+									<div class="break"></div>
 									<li
 										th:if="${session.tipo != null || session.usuarioLogado != null}"
 										class="nav-item">
 										<form th:action="@{/logout}" method="post">
-											<button type="submit" class="btn btn-outline-light">
-												<span class="bi bi-box-arrow-right font-input"><span
-													class="font-input"> Logout</span></span>
-											</button>
-											<span class="font-input text-white"></span>
+											<div class="d-grid gap-2">
+												<button type="submit" class="btn btn-outline-light btn-lg text-start">
+													<span class="bi bi-box-arrow-right"></span><span
+														class="font-input"> Desconectar</span>
+												</button>
+											</div>
 										</form>
 
 									</li>
@@ -107,7 +151,7 @@
 		<footer class="text-center bg-success rodape">
 			<div>
 				<span class="font-input text-white">Desenvolvido por</span> <a
-					class="font-input text-white" href="https://theuselessweb.com"
+					class="font-input text-white" href="/projeto"
 					target="_blank"> IFPE Enterprise &copy</a>
 			</div>
 		</footer>

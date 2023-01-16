@@ -2,37 +2,51 @@
 <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{/partials/pieces :: headBlock}">
 </head>
-<head><title>Meus Pedidos</title>
-<meta http-equiv="refresh" content="30"></head>
+<head>
+<title>Meus Pedidos</title>
+<meta http-equiv="refresh" content="30">
+</head>
 
 <body>
 	<header th:replace="~{/partials/pieces :: navbar}"></header>
 	<main class="container">
-		<div>
-			<h4>Histórico de Pedidos</h4>
-		</div>
-		<table class="table table-bordered border-success">
-			<thead>
+		<div class="tabela">
+			<div>
+				<h4>Histórico de Pedidos</h4>
+			</div>
+			<table class="table table-striped table-bordered border-success"
+				th:each="cont : ${MostrarPedidos}"
+				th:if="${cont.usuario!=null && cont.usuario.getId()==session.id}">
 				<tr>
-					<th scope="col">Data da compra</th>
-					<th scope="col">Pedido</th>
-					<th scope="col">Status</th>
-					<th scope="col">Valor</th>
-					<th scope="col">Forma de pagamento</th>
+					<th scope="col" style="width: 40%;">Data da compra</th>
+					<td
+						th:text="${{#dates.format(cont.dataCompra, 'dd/MM/yyyy - HH:mm')}}"></td>
 				</tr>
-			</thead>
-			<tr th:each="cont : ${MostrarPedidos}" th:if="${cont.usuario!=null && cont.usuario.getId()==session.id}">
-
-				<td th:text="${{#dates.format(cont.dataCompra, 'dd/MM/yyyy - HH:mm')}}"></td>
-				<td>
-				<span  th:each="produto: ${cont.produtos}" th:text="@{${produto.getQtd()}+'x '+${produto.produto.getNome()+';'+'&nbsp;'}}"></span>
-				</td>
-				<td th:text="${cont.status.getNome()}"></td>
-				<td th:text="@{'R$'+${#numbers.formatDecimal(cont.total,0,2)}}"></td>
-				<td th:text="${cont.tipopagamento}"></td>
-
-			</tr>
-		</table>
+				<tr>
+					<th scope="col">Pedido</th>
+					<td><span th:each="produto: ${cont.produtos}"
+						th:text="@{${produto.getQtd()}+'x '+${produto.produto.getNome()+';'+'&nbsp;'}}"></span>
+				</tr>
+				<tr th:switch="${cont.status.getNome()}">
+					<th scope="col">Status</th>
+					<td class="text-white" th:case="'Concluído'"
+						th:style="'background: green'" th:text="${cont.status.getNome()}"></td>
+					<td class="text-white" th:case="'Em andamento'"
+						th:style="'background: orange'" th:text="${cont.status.getNome()}"></td>
+					<td class="text-white" th:case="'Cancelado'"
+						th:style="'background: red'" th:text="${cont.status.getNome()}"></td>
+				</tr>
+				<tr>
+					<th scope="col">Valor</th>
+					<td th:text="@{'R$'+${#numbers.formatDecimal(cont.total,0,2)}}"></td>
+				</tr>
+				<tr>
+					<th scope="col">Forma de pagamento</th>
+					<td th:text="${cont.tipopagamento}"></td>
+				</tr>
+				<div class="break"></div>
+			</table>
+		</div>
 	</main>
 	<footer class="text-center">
 		<div th:replace="~{/partials/pieces :: footer}"></div>
