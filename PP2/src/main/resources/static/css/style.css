@@ -64,6 +64,9 @@ main{
 .margin{
 	margin-top:5px;
 }
+.produtos{
+	cursor: pointer;
+}
 .navbar-toggler:hover {
 	background-color: gray;
 }

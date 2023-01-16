@@ -23,7 +23,7 @@
 				<div th:each="prod: ${listarProdutos}">
 
 					<div class="div-produto" th:if="${prod.categorias==tipo}">
-						<div class="produto" data-bs-toggle="modal"
+						<div class="produto produtos" data-bs-toggle="modal"
 							th:data-bs-target="@{'#b' +${prod.id_produto}}">
 							<div class="info-prod">
 								<div class="nome-prod" th:text="${prod.nome}"></div>
