@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{/partials/pieces :: headBlock}">
+<title>Projeto PP2</title>
+</head>
+<body>
+	<header th:replace="~{/partials/pieces :: navbar}"> </header>
+	<main>
+		<div class="carrinhovazio" style="text-align: justify;">
+			<h2>Projeto desenvolvido para a disciplina Projeto e Prática 2
+				referente ao curso informática para internet do Instituto Federal de
+				Pernambuco Campus Jaboatão dos Guararapes.</h2>
+			<a href="https://github.com/gabrieleugenio1/PP2.git" target="_blank">Repositório no Github</a>
+		</div>
+	</main>
+	<footer class="text-center">
+		<div th:replace="~{/partials/pieces :: footer}"></div>
+	</footer>
+</body>
+</html>
