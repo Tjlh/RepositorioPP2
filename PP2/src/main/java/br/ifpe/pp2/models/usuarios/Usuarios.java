@@ -1,6 +1,7 @@
 package br.ifpe.pp2.models.usuarios;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -29,7 +30,7 @@ public class Usuarios {
 	@Column(nullable = false, updatable = false)
 	@CreationTimestamp
 	@DateTimeFormat(iso = ISO.DATE)
-	private LocalDate criacaoConta;
+	private Date criacaoConta = new Date();
 	
 	public Long  getId() {
 		return id;
@@ -61,10 +62,10 @@ public class Usuarios {
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
-	public LocalDate getCriacaoConta() {
+	public Date getCriacaoConta() {
 		return criacaoConta;
 	}
-	public void setCriacaoConta(LocalDate criacaoConta) {
+	public void setCriacaoConta(Date criacaoConta) {
 		this.criacaoConta = criacaoConta;
 	}
 	public Boolean getAdmin() {

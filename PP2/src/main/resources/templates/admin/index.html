@@ -11,6 +11,7 @@
 		<table class="table table-bordered border-success">
 			<thead>
 				<tr>
+					<th scope="col">Data Criação</th>
 					<th scope="col">Nome</th>
 					<th scope="col">E-mail</th>
 					<th scope="col">Celular</th>
@@ -20,6 +21,7 @@
 				</tr>
 			</thead>
 			<tr th:each="cont : ${listarUsuarios}">
+				<td th:text="${#dates.format(cont.criacaoConta, 'dd/MM/yyyy - HH:mm')}"></td>
 				<td th:text="${cont.nome}"></td>
 				<td th:text="${cont.email}"></td>
 				<td th:text="${cont.telefone}"></td>
