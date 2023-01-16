@@ -1,5 +1,8 @@
 package br.ifpe.pp2.servicos;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -11,21 +14,15 @@ import br.ifpe.pp2.models.usuarios.UsuariosDAO;
 
 @Service
 public class UsuarioServico {
-	
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
 
-	@Autowired
-	private UsuariosDAO usuariosdao;
-	
-	
-	public void salvar(Usuarios usuarios) {
-		 // usuarios.setSenha(passwordEncoder.encode(usuarios.getSenha()));
-		
-		  usuariosdao.save(usuarios);
-			System.out.println( usuariosdao.save(usuarios));
+	public static String md5(String senha) {
+		try {
+			MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+			BigInteger hash = new BigInteger(1, messageDigest.digest(senha.getBytes()));
+			return hash.toString(16);
+		} catch (Exception e) {
+			return "";
+		}
 	}
 	
 

@@ -23,13 +23,12 @@ public class AdminController {
 	
 	@PostMapping("/entrar/admin")
 	public String entrarAdmin(String login, String senha, HttpSession session, RedirectAttributes redirect) {
-		if(session.getAttribute("UsuarioLogado") != null || session.getAttribute("tipo") == "true" || session.getAttribute("tipo") == "false" ) {
+		if(session.getAttribute("UsuarioLogado") != null || session.getAttribute("tipo") != null) {
 			session.invalidate();
 		}
 		String loginAdmin = login.toLowerCase();
 		String senhaAdmin = senha.toLowerCase();
-		System.out.println(loginAdmin.compareTo("entrar") + "  " + senhaAdmin.compareTo("123"));
-		if(loginAdmin.compareTo("entrar") == 0 && senhaAdmin.compareTo("123") == 0) {
+		if(loginAdmin.compareTo("entrar") == 0 && senhaAdmin.compareTo("159632") == 0) {
 			session.setAttribute("tipo", "admin");
 			return "redirect:/admin/index";
 		}else {

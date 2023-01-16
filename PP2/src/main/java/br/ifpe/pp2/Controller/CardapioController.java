@@ -82,24 +82,6 @@ public class CardapioController {
 		session.invalidate();
 		return "redirect:/";
 	}
-	
-	
-	@PostMapping("/login/usuario")
-	public String loginUsuario(String email,String senha, RedirectAttributes ra, HttpSession session) {
-		Usuarios usuario = this.usuariosdao.findByEmailAndSenha(email, senha);
-		if (usuario != null) {
-			if(session.getAttribute("tipo") == "admin") {
-				session.invalidate();
-			}
-			session.setAttribute("usuarioLogado", usuario);
-			session.setAttribute("id", usuario.getId());
-			session.setAttribute("tipo", usuario.getAdmin());
-			System.out.println(usuario.getId());			
-			return "redirect:/";
-		} else {
-			ra.addFlashAttribute("mensagemErro", "Usuário/senha inválidos");
-			return "redirect:/login";
-		} 
-
-	}
 }
+	
+

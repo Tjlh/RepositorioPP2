@@ -21,6 +21,7 @@ import br.ifpe.pp2.models.produtos.Produto;
 import br.ifpe.pp2.models.produtos.ProdutoDAO;
 import br.ifpe.pp2.models.usuarios.Usuarios;
 import br.ifpe.pp2.models.usuarios.UsuariosDAO;
+import br.ifpe.pp2.servicos.UsuarioServico;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -40,9 +41,10 @@ public class CriacaoController {
 	}
 
 	@PostMapping("/salvar/novousuario")
-	public String salvarUsuario(String email, Usuarios usuarios, RedirectAttributes redirect) {
+	public String salvarUsuario(String senha,String email, Usuarios usuarios, RedirectAttributes redirect) {
 
 		if (email != null && usuariosdao.findByEmail(email) == null) {
+			usuarios.setSenha(UsuarioServico.md5(senha));
 			usuariosdao.save(usuarios);
 			redirect.addFlashAttribute("sucess", "Conta criada com sucesso.");
 			return "redirect:/login";
@@ -52,6 +54,25 @@ public class CriacaoController {
 			return "redirect:/cadastro";
 
 		}
+	}
+	
+	@PostMapping("/login/usuario")
+	public String loginUsuario(String email,String senha, RedirectAttributes ra, HttpSession session) {
+		Usuarios usuario = this.usuariosdao.findByEmailAndSenha(email, UsuarioServico.md5(senha));
+		if (usuario != null) {
+			if(session.getAttribute("tipo") == "admin") {
+				session.invalidate();
+			}
+			session.setAttribute("usuarioLogado", usuario);
+			session.setAttribute("id", usuario.getId());
+			session.setAttribute("tipo", usuario.getAdmin());
+			System.out.println(usuario.getId());			
+			return "redirect:/";
+		} else {
+			ra.addFlashAttribute("mensagemErro", "Usuário/senha inválidos");
+			return "redirect:/login";
+		} 
+
 	}
 
 	@PostMapping("/alterardados")
@@ -77,7 +98,7 @@ public class CriacaoController {
 			redirect.addFlashAttribute("sucess", "Número alterado com sucesso.");
 		}
 		if (senha != null) {
-			encontrado.setTelefone(senha);
+			encontrado.setSenha(UsuarioServico.md5(senha));
 			redirect.addFlashAttribute("sucess", "Senha alterada com sucesso.");
 		}
 		usuariosdao.save(encontrado);
