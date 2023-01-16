@@ -44,7 +44,7 @@
 					<span class="font-input">Preço: </span><span
 						class="preco-prod font-input">R$</span><span
 						class="preco-prod font-input"
-						th:text="${#numbers.formatDecimal(item.valorUnd,0,2)}"></span>
+						th:text="${#numbers.formatDecimal(item.valorTotal,0,2)}"></span>
 				</div>
 				<div class="col text-center">
 					<span class="font-input">Qtd: </span><span class="font-input"
@@ -63,15 +63,15 @@
 			<div class="row align-items-center">
 				<div class="col-8 fs-3 fw-bold text-end">Total:</div>
 				<div class="col fs-3 fw-bold text-center"
-					th:text="${#numbers.formatDecimal(compra.total,1,2)}"></div>
+					th:text="@{'R$' + ${#numbers.formatDecimal(compra.total,1,2)}}"></div>
 			</div>
 			<div class="col d-grid gap-2">
 				<a class="btn btn-outline-secondary text-center" href='/'>Continuar
 					Comprando</a>
 			</div>
 			<div class="col d-grid gap-2">
-				<a class="btn btn-success text-center" role="button"
-					th:href="finalizar">Finalizar Compra</a>
+				<a class="btn btn-success text-center" role="button" th:href="finalizar">Finalizar
+					Compra</a>
 			</div>
 		</div>
 		<div style="margin: 15px;"></div>
